@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Ad Reels — AI Video Ads for Supplement & Skincare Brands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F8F5F0;
+    --warm-white: #FDFCFA;
+    --ink: #1A1814;
+    --ink-soft: #3D3A35;
+    --ink-muted: #7A7670;
+    --accent: #C8502A;
+    --accent-light: #F0E4DC;
+    --border: #E8E3DC;
+    --border-strong: #C8C2B8;
+    --mono: 'DM Mono', monospace;
+    --serif: 'Cormorant Garamond', serif;
+    --sans: 'Instrument Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(253, 252, 250, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  /* ─── LOGO MARK ─── */
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .logo-wordmark {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .logo-wordmark span {
+    color: var(--accent);
+  }
+
+  nav .nav-cta {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid var(--ink);
+    transition: all 0.2s ease;
+  }
+
+  nav .nav-cta:hover {
+    background: var(--ink);
+    color: var(--warm-white);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 81px;
+  }
+
+  .hero-left {
+    padding: 80px 64px 80px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.1s forwards;
+  }
+
+  .hero-headline {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(48px, 5.5vw, 80px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 440px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.35s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.45s forwards;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--warm-white);
+    background: var(--ink);
+    padding: 16px 32px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-primary:hover::after { transform: scaleX(1); }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-ghost {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-strong);
+    padding-bottom: 2px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* Hero right — decorative panel */
+  .hero-right {
+    background: var(--cream);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.5s forwards;
+  }
+
+  .hero-visual {
+    position: relative;
+    width: 320px;
+  }
+
+  /* Floating ad mockup cards */
+  .ad-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+
+  .ad-card:hover { transform: translateY(-4px); }
+
+  .ad-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .ad-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8D5C4, #C8A882);
+    flex-shrink: 0;
+  }
+
+  .ad-avatar-info .name {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .ad-avatar-info .tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .ad-video-thumb {
+    width: 100%;
+    aspect-ratio: 9/16;
+    background: linear-gradient(160deg, #F0E8DF 0%, #E0D0C0 50%, #C8B89A 100%);
+    border-radius: 1px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ad-video-thumb::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.1) 20px,
+      rgba(255,255,255,0.1) 40px
+    );
+  }
+
+  .play-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .play-btn::after {
+    content: '';
+    border-left: 14px solid var(--ink);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    margin-left: 3px;
+  }
+
+  .ad-meta {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .ad-card-2 {
+    position: absolute;
+    width: 200px;
+    top: -40px;
+    right: -60px;
+    transform: rotate(3deg);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .ad-card-3 {
+    position: absolute;
+    width: 180px;
+    bottom: -30px;
+    left: -50px;
+    transform: rotate(-2deg);
+    animation: float 8s ease-in-out 1s infinite;
+  }
+
+  /* Stats strip at bottom of hero-right */
+  .hero-stats {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 32px;
+    display: flex;
+    gap: 32px;
+    border-top: 1px solid var(--border);
+    background: rgba(253, 252, 250, 0.6);
+  }
+
+  .stat { flex: 1; }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  /* ─── TICKER / MARQUEE ─── */
+  .ticker {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--cream);
+    padding: 14px 0;
+  }
+
+  .ticker-track {
+    display: flex;
+    gap: 0;
+    animation: ticker 24s linear infinite;
+    width: max-content;
+  }
+
+  .ticker-item {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding: 0 40px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .ticker-item::after {
+    content: '◆';
+    font-size: 6px;
+    color: var(--accent);
+  }
+
+  /* ─── SECTION SHARED ─── */
+  section { padding: 120px 48px; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-heading {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(36px, 4vw, 58px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .section-heading em { font-style: italic; }
+
+  /* ─── PROBLEM SECTION ─── */
+  .problem {
+    background: var(--ink);
+    color: var(--warm-white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+  }
+
+  .problem-left {
+    padding: 100px 64px 100px 48px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .problem-left .section-label { color: #C8A882; }
+
+  .problem-left .section-heading { color: var(--warm-white); }
+  .problem-left .section-heading em { color: #C8502A; }
+
+  .problem-left p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.65);
+    max-width: 400px;
+  }
+
+  .problem-right {
+    padding: 100px 48px 100px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .problem-item {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .problem-num {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.1);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 60px;
+  }
+
+  .problem-text h4 {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--warm-white);
+    margin-bottom: 6px;
+  }
+
+  .problem-text p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how {
+    background: var(--warm-white);
+    padding: 120px 48px;
+  }
+
+  .how-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 80px;
+  }
+
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--border);
+  }
+
+  .step {
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    transition: background 0.3s ease;
+  }
+
+  .step:last-child { border-right: none; }
+  .step:hover { background: var(--cream); }
+
+  .step-num {
+    font-family: var(--serif);
+    font-size: 80px;
+    font-weight: 300;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 24px;
+    display: block;
+    transition: color 0.3s ease;
+  }
+
+  .step:hover .step-num { color: var(--accent-light); }
+
+  .step h3 {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+
+  .step p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+
+  .step-icon {
+    position: absolute;
+    top: 48px;
+    right: 40px;
+    font-size: 24px;
+    opacity: 0.25;
+  }
+
+  /* ─── OFFER / PRICING ─── */
+  .offer {
+    background: var(--cream);
+    padding: 120px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .offer::before {
+    content: 'FOUNDING';
+    font-family: var(--serif);
+    font-size: clamp(80px, 14vw, 200px);
+    font-weight: 300;
+    color: rgba(200,80,42,0.05);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.04em;
+  }
+
+  .offer-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .offer-card {
+    background: white;
+    border: 1px solid var(--border-strong);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.07);
+  }
+
+  .offer-left {
+    padding: 56px 48px;
+    border-right: 1px solid var(--border);
+  }
+
+  .founding-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 6px 12px;
+    margin-bottom: 28px;
+  }
+
+  .offer-price {
+    font-family: var(--serif);
+    font-size: 80px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .offer-price-note {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 32px;
+  }
+
+  .offer-price-note s {
+    color: var(--ink-soft);
+    text-decoration-color: var(--accent);
+  }
+
+  .offer-desc {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+  }
+
+  .offer-cta {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--warm-white);
+    background: var(--accent);
+    padding: 16px 32px;
+    transition: all 0.25s ease;
+  }
+
+  .offer-cta:hover { background: var(--ink); }
+
+  .offer-right {
+    padding: 56px 48px;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .offer-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .offer-check {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .offer-check::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .offer-item-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .offer-item-text span {
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  .offer-disclaimer {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ─── WHO IT'S FOR ─── */
+  .for-brands {
+    background: var(--warm-white);
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .for-brands-left { position: sticky; top: 120px; }
+
+  .for-brands-left p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-top: 20px;
+  }
+
+  .brand-checks {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 12px;
+  }
+
+  .check-row {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .check-row:first-child { border-top: 1px solid var(--border); }
+
+  .check-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .check-indicator.grey { background: var(--border-strong); }
+
+  .check-text {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  .check-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ─── SAMPLE SECTION ─── */
+  .samples {
+    background: var(--cream);
+    padding: 120px 48px;
+    text-align: center;
+  }
+
+  .samples-header { margin-bottom: 60px; }
+
+  .sample-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto 48px;
+  }
+
+  .sample-card {
+    background: white;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    text-align: left;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .sample-card:hover {
+    box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+    transform: translateY(-4px);
+  }
+
+  .sample-thumb {
+    width: 100%;
+    aspect-ratio: 9/16;
+    background: linear-gradient(160deg, #EDE4D8 0%, #D9C9B3 40%, #C4B090 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sample-thumb:nth-child(1) { background: linear-gradient(160deg, #EDE4D8 0%, #D9C9B3 100%); }
+
+  .sample-play {
+    width: 48px;
+    height: 48px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  .sample-card:hover .sample-play { transform: scale(1.1); }
+
+  .sample-play::after {
+    content: '';
+    border-left: 16px solid var(--ink);
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    margin-left: 4px;
+  }
+
+  .sample-label {
+    padding: 14px 16px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-top: 1px solid var(--border);
+  }
+
+  .samples-note {
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-style: italic;
+    font-family: var(--serif);
+    font-size: 18px;
+  }
+
+  /* ─── CTA SECTION ─── */
+  .final-cta {
+    background: var(--ink);
+    padding: 120px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .cta-left .section-label { color: #C8A882; }
+
+  .cta-heading {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(36px, 4vw, 58px);
+    line-height: 1.08;
+    color: var(--warm-white);
+    letter-spacing: -0.02em;
+  }
+
+  .cta-heading em { font-style: italic; color: var(--accent); }
+
+  .cta-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .cta-right p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 20px;
+  }
+
+  .email-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--warm-white);
+    text-decoration: none;
+    padding: 20px 28px;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.25s ease;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .email-link:hover {
+    border-color: var(--accent);
+    background: rgba(200,80,42,0.08);
+    color: var(--accent);
+  }
+
+  .email-arrow {
+    font-size: 18px;
+    transition: transform 0.2s ease;
+  }
+
+  .email-link:hover .email-arrow { transform: translateX(4px); }
+
+  .cta-guarantee {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .footer-logo .logo-wordmark { color: rgba(255,255,255,0.5); font-size: 15px; }
+  .footer-logo .logo-wordmark span { color: var(--accent); }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(3deg); }
+    50% { transform: translateY(-12px) rotate(3deg); }
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 60px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+    .hero-right { display: none; }
+
+    .problem { grid-template-columns: 1fr; }
+    .problem-left { padding: 60px 24px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .problem-right { padding: 60px 24px; }
+
+    .how-steps { grid-template-columns: 1fr; }
+    .step { border-right: none; border-bottom: 1px solid var(--border); }
+
+    .offer-card { grid-template-columns: 1fr; }
+    .offer-left { border-right: none; border-bottom: 1px solid var(--border); }
+
+    .for-brands { grid-template-columns: 1fr; gap: 40px; }
+    .for-brands-left { position: static; }
+
+    .sample-grid { grid-template-columns: 1fr 1fr; }
+
+    .final-cta { grid-template-columns: 1fr; gap: 40px; }
+
+    section { padding: 80px 24px; }
+    .offer { padding: 80px 24px; }
+    .how { padding: 80px 24px; }
+    .for-brands { padding: 80px 24px; }
+    .samples { padding: 80px 24px; }
+    .final-cta { padding: 80px 24px; }
+
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="#" class="logo">
+    <!-- LOGO MARK: Geometric film frame + play arrow hybrid -->
+    <svg class="logo-mark" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer frame -->
+      <rect x="1" y="1" width="34" height="34" stroke="#1A1814" stroke-width="1.5"/>
+      <!-- Film perforations — top -->
+      <rect x="4" y="4" width="4" height="4" fill="#1A1814"/>
+      <rect x="28" y="4" width="4" height="4" fill="#1A1814"/>
+      <!-- Film perforations — bottom -->
+      <rect x="4" y="28" width="4" height="4" fill="#1A1814"/>
+      <rect x="28" y="28" width="4" height="4" fill="#1A1814"/>
+      <!-- Play arrow — accent colour -->
+      <path d="M14 12L26 18L14 24V12Z" fill="#C8502A"/>
+    </svg>
+    <span class="logo-wordmark">Get Ad <span>Reels</span></span>
+  </a>
+  <a href="mailto:daniel@getadreels.com" class="nav-cta">Get Started</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">AI Video Ads · Supplements &amp; Skincare</p>
+    <h1 class="hero-headline">Your ads are<br><em>fatiguing.</em><br>Let's fix that.</h1>
+    <p class="hero-sub">Fresh UGC-style video ads for brands running on Meta — scripted, produced, and delivered fast. No agencies, no studios, no waiting.</p>
+    <div class="hero-actions">
+      <a href="mailto:daniel@getadreels.com" class="btn-primary"><span>See a Sample →</span></a>
+      <a href="#how" class="btn-ghost">How it works</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual">
+      <!-- Main ad card -->
+      <div class="ad-card" style="position:relative;z-index:2;">
+        <div class="ad-card-header">
+          <div class="ad-avatar"></div>
+          <div class="ad-avatar-info">
+            <div class="name">Sarah M.</div>
+            <div class="tag">Sponsored · Collagen+</div>
+          </div>
+        </div>
+        <div class="ad-video-thumb">
+          <div class="play-btn"></div>
+        </div>
+        <div class="ad-meta">0:28 · UGC TESTIMONIAL · META FEED</div>
+      </div>
+
+      <!-- Floating card 2 -->
+      <div class="ad-card ad-card-2">
+        <div class="ad-video-thumb" style="aspect-ratio:4/5;background:linear-gradient(160deg,#E4D0C0,#C8A882);margin-bottom:0;">
+          <div class="play-btn"></div>
+        </div>
+      </div>
+
+      <!-- Floating card 3 -->
+      <div class="ad-card ad-card-3">
+        <div class="ad-video-thumb" style="aspect-ratio:4/5;background:linear-gradient(160deg,#D8E4D0,#A8C882);margin-bottom:0;">
+          <div class="play-btn"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">3×</div>
+        <div class="stat-label">Ads per pack</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">48h</div>
+        <div class="stat-label">Turnaround</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">30s</div>
+        <div class="stat-label">Per video</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TICKER ─── -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Ad Fatigue is Real</div>
+    <div class="ticker-item">Supplements</div>
+    <div class="ticker-item">Skincare</div>
+    <div class="ticker-item">UGC Testimonial Style</div>
+    <div class="ticker-item">Meta &amp; Instagram Ready</div>
+    <div class="ticker-item">48hr Turnaround</div>
+    <div class="ticker-item">No Agency Needed</div>
+    <div class="ticker-item">A/B Test Ready</div>
+    <!-- duplicate for seamless loop -->
+    <div class="ticker-item">Ad Fatigue is Real</div>
+    <div class="ticker-item">Supplements</div>
+    <div class="ticker-item">Skincare</div>
+    <div class="ticker-item">UGC Testimonial Style</div>
+    <div class="ticker-item">Meta &amp; Instagram Ready</div>
+    <div class="ticker-item">48hr Turnaround</div>
+    <div class="ticker-item">No Agency Needed</div>
+    <div class="ticker-item">A/B Test Ready</div>
+  </div>
+</div>
+
+<!-- ─── PROBLEM ─── -->
+<div class="problem">
+  <div class="problem-left">
+    <p class="section-label">The Problem</p>
+    <h2 class="section-heading">Running the same<br>ad for months is<br><em>killing your ROAS.</em></h2>
+    <p>Every ad has a lifespan. Once your audience has seen the same creative too many times, performance nosedives — and most brands wait too long to do anything about it.</p>
+  </div>
+  <div class="problem-right">
+    <div class="problem-item reveal">
+      <span class="problem-num">01</span>
+      <div class="problem-text">
+        <h4>Ad fatigue starts faster than you think</h4>
+        <p>On Meta, high-frequency audiences can lose interest in an ad within 4–8 weeks. Same hook, same face, same outcome.</p>
+      </div>
+    </div>
+    <div class="problem-item reveal">
+      <span class="problem-num">02</span>
+      <div class="problem-text">
+        <h4>UGC creators are slow and expensive</h4>
+        <p>Booking a human UGC creator means $150–$300 per video, revision rounds, and week-long waits. Not ideal when you need fresh creative now.</p>
+      </div>
+    </div>
+    <div class="problem-item reveal">
+      <span class="problem-num">03</span>
+      <div class="problem-text">
+        <h4>You need volume to find winners</h4>
+        <p>The brands scaling on Meta test multiple angles simultaneously. One ad doesn't tell you anything. Three do.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── HOW IT WORKS ─── -->
+<div class="how" id="how">
+  <div class="how-header reveal">
+    <div>
+      <p class="section-label">The Process</p>
+      <h2 class="section-heading">Simple. Fast.<br><em>Done.</em></h2>
+    </div>
+    <p style="max-width:300px;font-size:14px;color:var(--ink-soft);line-height:1.7;text-align:right;">Three steps from brief to inbox. You handle the ads, I handle the creative.</p>
+  </div>
+
+  <div class="how-steps">
+    <div class="step reveal">
+      <span class="step-num">01</span>
+      <span class="step-icon">📋</span>
+      <h3>Brief me</h3>
+      <p>Send me your product, target customer, and the benefits you want to push. Takes ten minutes. I'll confirm I have everything before starting.</p>
+    </div>
+    <div class="step reveal">
+      <span class="step-num">02</span>
+      <span class="step-icon">🎬</span>
+      <h3>I write & produce</h3>
+      <p>I script three 15–30 second UGC-style ads with different hooks so you can A/B test which angle converts best. Then I generate them in high quality.</p>
+    </div>
+    <div class="step reveal">
+      <span class="step-num">03</span>
+      <span class="step-icon">📥</span>
+      <h3>You receive & test</h3>
+      <p>MP4 files land in your inbox within 48 hours. Each one comes with a note explaining what angle it tests. Drop them into Ads Manager and go.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PRICING ─── -->
+<div class="offer" id="pricing">
+  <div class="offer-inner">
+    <div style="text-align:center;margin-bottom:52px;" class="reveal">
+      <p class="section-label">Founding Rate</p>
+      <h2 class="section-heading">One offer.<br><em>No confusion.</em></h2>
+    </div>
+
+    <div class="offer-card reveal">
+      <div class="offer-left">
+        <div class="founding-badge">⚡ Founding Client Rate</div>
+        <div class="offer-price">£75</div>
+        <div class="offer-price-note">For 3 videos · Limited spots · Usually <s>£150</s></div>
+        <p class="offer-desc">I'm taking on a small number of founding clients at this rate in exchange for honest feedback and, if you're happy, a short testimonial. Once those spots are gone, the price goes up.</p>
+        <a href="mailto:daniel@getadreels.com?subject=Founding Client Enquiry" class="offer-cta">Claim Your Spot →</a>
+      </div>
+      <div class="offer-right">
+        <div class="offer-item">
+          <div class="offer-check"></div>
+          <div class="offer-item-text">
+            <strong>3 × 15–30 second video ads</strong>
+            <span>Each with a different hook so you can test what resonates with your audience</span>
+          </div>
+        </div>
+        <div class="offer-item">
+          <div class="offer-check"></div>
+          <div class="offer-item-text">
+            <strong>UGC testimonial style</strong>
+            <span>Same format that's already proven to work in supplements & skincare on Meta</span>
+          </div>
+        </div>
+        <div class="offer-item">
+          <div class="offer-check"></div>
+          <div class="offer-item-text">
+            <strong>48-hour delivery</strong>
+            <span>MP4 files ready to drop straight into Ads Manager</span>
+          </div>
+        </div>
+        <div class="offer-item">
+          <div class="offer-check"></div>
+          <div class="offer-item-text">
+            <strong>Scripts included</strong>
+            <span>Full written scripts provided alongside the videos for your records</span>
+          </div>
+        </div>
+        <div class="offer-item">
+          <div class="offer-check"></div>
+          <div class="offer-item-text">
+            <strong>One round of revisions</strong>
+            <span>If something's not right, I'll fix it. No questions asked.</span>
+          </div>
+        </div>
+        <div class="offer-disclaimer">Supplements & skincare brands only · US brands welcome · Payment on delivery</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── WHO IT'S FOR ─── -->
+<div class="for-brands">
+  <div class="for-brands-left reveal">
+    <p class="section-label">Who This Is For</p>
+    <h2 class="section-heading" style="font-size:clamp(30px,3vw,44px);">Built for<br>brands that<br><em>already run ads.</em></h2>
+    <p>This works best for brands spending real money on Meta who understand that testing creative is how you win — not set it and forget it.</p>
+  </div>
+
+  <div>
+    <div class="brand-checks reveal">
+      <div class="check-row">
+        <div class="check-indicator"></div>
+        <div class="check-text"><strong>5+ active ads running on Meta</strong> — you understand testing, you just need more creative</div>
+      </div>
+      <div class="check-row">
+        <div class="check-indicator"></div>
+        <div class="check-text"><strong>Supplements or skincare brand</strong> — collagen, greens, skincare routines, glow serums</div>
+      </div>
+      <div class="check-row">
+        <div class="check-indicator"></div>
+        <div class="check-text"><strong>Already using UGC style ads</strong> — you know the format, you just need more of it</div>
+      </div>
+      <div class="check-row">
+        <div class="check-indicator"></div>
+        <div class="check-text"><strong>Same ads running 3+ months</strong> — performance has likely already started to slip</div>
+      </div>
+      <div class="check-row">
+        <div class="check-indicator grey"></div>
+        <div class="check-text" style="color:var(--ink-muted);"><strong>Not for:</strong> Early-stage brands with no ad spend, or brands wanting production studios and actors</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SAMPLE VIDEOS ─── -->
+<div class="samples">
+  <div class="samples-header reveal">
+    <p class="section-label">Sample Work</p>
+    <h2 class="section-heading">See the<br><em>quality first.</em></h2>
+  </div>
+
+  <div class="sample-grid">
+    <div class="sample-card reveal">
+      <div class="sample-thumb">
+        <div class="sample-play"></div>
+      </div>
+      <div class="sample-label">Hook A · Skin Benefits · Collagen</div>
+    </div>
+    <div class="sample-card reveal">
+      <div class="sample-thumb" style="background:linear-gradient(160deg,#D8E4D8,#A8C4A0);">
+        <div class="sample-play"></div>
+      </div>
+      <div class="sample-label">Hook B · Morning Routine · Greens</div>
+    </div>
+    <div class="sample-card reveal">
+      <div class="sample-thumb" style="background:linear-gradient(160deg,#E4DCE4,#C4A8C4);">
+        <div class="sample-play"></div>
+      </div>
+      <div class="sample-label">Hook C · Results Focus · Skincare</div>
+    </div>
+  </div>
+
+  <p class="samples-note reveal"><em>Sample videos coming soon — email for an immediate preview.</em></p>
+</div>
+
+<!-- ─── FINAL CTA ─── -->
+<div class="final-cta">
+  <div class="cta-left reveal">
+    <p class="section-label">Ready?</p>
+    <h2 class="cta-heading">Fresh creative.<br>Fast turnaround.<br><em>Founding price.</em></h2>
+  </div>
+  <div class="cta-right reveal">
+    <p>Email me with your brand name and I'll come back to you within 24 hours. No forms, no onboarding decks — just a quick conversation to see if it's a fit.</p>
+    <a href="mailto:daniel@getadreels.com?subject=Founding Client Enquiry" class="email-link">
+      daniel@getadreels.com
+      <span class="email-arrow">→</span>
+    </a>
+    <div class="cta-guarantee">No long contracts · Pay on delivery · Supplements & skincare only</div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <a href="#" class="footer-logo">
+    <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="34" height="34" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+      <rect x="4" y="4" width="4" height="4" fill="rgba(255,255,255,0.3)"/>
+      <rect x="28" y="4" width="4" height="4" fill="rgba(255,255,255,0.3)"/>
+      <rect x="4" y="28" width="4" height="4" fill="rgba(255,255,255,0.3)"/>
+      <rect x="28" y="28" width="4" height="4" fill="rgba(255,255,255,0.3)"/>
+      <path d="M14 12L26 18L14 24V12Z" fill="#C8502A"/>
+    </svg>
+    <span class="logo-wordmark">Get Ad <span>Reels</span></span>
+  </a>
+  <div class="footer-copy">© 2026 Get Ad Reels · getadreels.com</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        // Stagger siblings
+        const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
+        const idx = siblings.indexOf(entry.target);
+        entry.target.style.transitionDelay = `${idx * 0.1}s`;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
