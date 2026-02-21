@@ -157,3 +157,6 @@ The task is complete when:
 - **Delivery time:** Updated from 48 hours to 72 hours across all sections (hero stat, ticker, how-it-works, pricing)
 - **Hero CTA:** Removed "See a Sample" button, kept only "How it works" link
 - **Sample section:** Added clickable mailto link to `daniel@getadreels.com` in the sample note text
+
+### 2026-02-21 — Pricing Update
+- **Founding client pricing:** Updated from £75 to $95 USD for 3-video pack
